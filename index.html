@@ -97,11 +97,8 @@
     
     <script>
         // Adding rated class to the stars on clicking
-        var rating = document.getElementsByClassName("actions");
-        var counter = 1;
-        rating.forEach(()=> {
-            onclick.getElementsByTagName(`span`)[counter].classList = "rated";
-        });
+        var rating = document.getElementsByClassName("actions")[0];
+        var x = rating.getElementsByTagName("span");
         for(let i = 0; i < x.length; x++){ 
           x[i].onclick = function(){
             this.classList.add("rated");
@@ -115,18 +112,16 @@
         const formatMoney = (figure) => { 
           return figure;
         };
+
         
         //Calculating the tip
         const calculateTip = () => {};
         
         //The meal chosen function
-        const mealChoosen = () => {
-            console.log('you clicked me');
-            
-        };
+        const mealChoosen = () => {};
       
         //Rating of the meal
-        const rateMeal = () => {console.log('rated meal')};
+        const rateMeal = () => {};
         
         //Setting up UI interaction
         const uiCanInteract = () => {
@@ -142,24 +137,24 @@
         };
         
         //	The Display menu Function
-      const displayMenu = (data) => {
-        const results = data.results[0]
-        Object.keys(results).map((key, index) => {
-          menu.push(results[key])
+      const displayMenu=(meals) => {
+        const data = meals.results[0]
+        Object.keys(data).map((key, index) => {
+          menu.push(data[key])
         //Iterating the menu
           menu.forEach((options) => {
-            document.querySelectorAll(`img`)[index].src = options.sample;
-            document.querySelectorAll(`p`)[index].textContent = formatMoney(options.price);
-            document.querySelectorAll(`.menu .item`)[index].setAttribute('data-meal-id', options.id);
+            document.querySelectorAll("img")[index].src = options.sample;
+            document.querySelectorAll("p")[index].textContent = formatMoney(options.price);
+            document.querySelectorAll(".menu .item")[index].setAttribute('data-meal-id', options.id);
           });
         });
         uiCanInteract();
       };
         
         //Fetching of the data from an API
-        const fetchAndDisplayMenu = () => {
+        const fetchAndDisplayMenu = async() => {
           const api = 'https://randomapi.com/api/d12c99b82acfefae33f7ce9239b57811';
-          return fetch(api)
+          return await fetch(api)
             .then(response => response.json())
             .then((data) => displayMenu(data));
         };
